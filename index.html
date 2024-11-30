@@ -50,21 +50,73 @@
             background-color: #333333; 
         }
 
-        
         .section-spacing {
             margin-top: 20px;
+        }
+
+        
+        .typing-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .sub-text {
+            font-size: 1.25rem;
+            color: #666;
+        }
+
+        
+        .header-content {
+            display: flex;
+            align-items: center; 
+            justify-content: space-between;  
+            gap: 20px;  
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;  
+            justify-content: center;
+        }
+
+        .header-text h1 {
+            font-size: 2.5rem;
+        }
+
+        .header-text p {
+            margin-top: 10px;
+        }
+
+        
+        .align-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .header-content .text-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
     </style>
 </head>
 <body class="bg-white font-sans text-gray-800">
     <div class="container mx-auto p-6">
         <!-- Header Section -->
-        <header class="flex items-center mb-8">
-            <!-- Left side content: Name -->
-            <div class="w-2/3 text-left">
-                <h2 class="text-xl text-gray-600 mt-2">Hi. I'm</h2>
-                <h1 class="text-4xl font-bold">Nadimur Rahman Shawon</h1>
-                <p class="text-xl text-gray-600 mt-2">Software Engineer</p>
+        <header class="header-content mb-8">
+            <!-- Left side content: Name and profession -->
+            <div class="header-text">
+                <div class="text-wrapper">
+                    <h2 class="text-xl text-gray-600 mt-2">Hi. I'm</h2>
+                    <h1 class="text-4xl font-bold ml-2">
+                        <span id="typingText" class="typing-text"></span>
+                    </h1>
+                </div>
+                <p class="text-xl text-gray-600 mt-2">
+                    <span id="subText" class="sub-text"></span>
+                </p>
             </div>
             <!-- Right side content: Image -->
             <div class="w-1/3 text-center">
@@ -80,22 +132,65 @@
         </section>
 
         <!-- Social Media Links Section -->
-        <section class="text-left mt-4"> <!-- Reduced margin-top -->
+        <section class="text-left mt-4">
             <div class="social-icons-container">
-                <!-- LinkedIn Icon -->
                 <a href="https://www.linkedin.com/in/nadimur-rahman-shawon-67515433b/" target="_blank" class="social-icon">
                     <i class="fab fa-linkedin-in text-black"></i>
                 </a>
-                <!-- GitHub Icon -->
                 <a href="https://github.com/nadimurshawon" target="_blank" class="social-icon">
                     <i class="fab fa-github text-black"></i>
                 </a>
-                <!-- Gmail Icon -->
                 <a href="mailto:" target="_blank" class="social-icon">
                     <i class="fas fa-envelope text-black"></i>
                 </a>
             </div>
         </section>
     </div>
+
+    <script>
+        
+        const typingText = document.getElementById('typingText');
+        const subText = document.getElementById('subText');
+
+        const typingSpeed = 150;  
+        const pauseBetweenWords = 2000; 
+
+        const nameText = "Nadimur Rahman Shawon";
+        const professionText = "Software Engineer";
+
+        let currentIndex = 0;
+        let isNameComplete = false;
+        let isProfessionComplete = false;
+
+        
+        function typeText() {
+            if (currentIndex < nameText.length) {
+                typingText.textContent += nameText.charAt(currentIndex);
+                currentIndex++;
+                setTimeout(typeText, typingSpeed);
+            } else if (!isNameComplete) {
+                isNameComplete = true;
+                setTimeout(typeProfessionText, pauseBetweenWords); 
+            }
+        }
+
+        
+        function typeProfessionText() {
+            let professionIndex = 0; 
+            subText.textContent = ""; 
+            
+            function typeProfession() {
+                if (professionIndex < professionText.length) {
+                    subText.textContent += professionText.charAt(professionIndex);
+                    professionIndex++;
+                    setTimeout(typeProfession, typingSpeed);
+                }
+            }
+            typeProfession(); 
+        }
+
+        
+        typeText();
+    </script>
 </body>
 </html>
